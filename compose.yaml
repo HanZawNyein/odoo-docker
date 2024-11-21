@@ -21,12 +21,6 @@ services:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
-    command:
-      - postgres
-      - -c shared_buffers=1GB           # Use 25% of total RAM
-      - -c work_mem=8MB                 # Allocated per query
-      - -c effective_cache_size=3GB     # Cache size to speed up reads
-      - -c maintenance_work_mem=256MB   # For maintenance tasks (e.g., VACUUM)
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
     secrets:
