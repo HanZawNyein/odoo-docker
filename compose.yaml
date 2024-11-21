@@ -21,8 +21,26 @@ services:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
+      - max_connections=200
+      - listen_addresses='*'
+      - superuser_reserved_connections=3
+      - shared_buffers=2GB
+      - work_mem=16MB
+      - effective_cache_size=3GB
+      - maintenance_work_mem=512MB
+      - wal_buffers=16MB
+      - autovacuum=on
+      - autovacuum_max_workers=3
+      - autovacuum_naptime=1min
+      - autovacuum_vacuum_cost_limit=200
+      - autovacuum_vacuum_threshold=50
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
+    deploy:
+      resources:
+        limits:
+          memory: 2GB
+          cpus: "1.0"
     secrets:
       - postgresql_password
 volumes:
